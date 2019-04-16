@@ -63,6 +63,19 @@ jobs:
       - run:
           name: send to artifactory
           command: curl -X PUT "https://artifactory.benjamin-tourman.fr/artifactory/example-repo-local/circle-ci-js-example/build.zip" -T build.zip
+  deploy:
+    docker:
+      - image: circleci/node:10
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ./
+      - run:
+          name: zip workspace
+          command: scp -r -p . $SRV_USER:$SRV_PASS@$SRV_HOST/:circle-ci-js-example
+      - run:
+          name: run
+          command: ssh $SRV_USER:$SRV_PASS@$SRV_HOST/:circle-ci-js-example && npm start
 
 workflows:
   version: 2
@@ -95,6 +108,12 @@ workflows:
       - zip-to-artifactory:
           requires:
             - test
+          filters:
+            branches:
+              only: master
+      - deploy:
+          requires:
+            - zip-to-artifactory
           filters:
             branches:
               only: master
