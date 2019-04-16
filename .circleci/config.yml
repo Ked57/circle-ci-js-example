@@ -70,12 +70,15 @@ jobs:
       - checkout
       - attach_workspace:
           at: ./
+      - add_ssh_keys:
+          fingerprints:
+            - $SRV_FINGERPRINT
       - run:
           name: send to server
-          command: scp -r -p . $SRV_USER:$SRV_PASS@$SRV_HOST/:circle-ci-js-example
+          command: scp -r -p . $SRV_USER@$SRV_HOST:circle-ci-js-example
       - run:
           name: run
-          command: ssh $SRV_USER:$SRV_PASS@$SRV_HOST/:circle-ci-js-example && npm start
+          command: ssh $SRV_USER@$SRV_HOST:circle-ci-js-example && npm start
 
 workflows:
   version: 2
