@@ -78,7 +78,7 @@ jobs:
           command: ssh-keyscan $SRV_HOST >> ~/.ssh/known_hosts
       - run:
           name: send to server
-          command: scp -i ~/.ssh/id_rsa ../build.zip $SRV_USER@$SRV_HOST:circle-ci-js-example
+          command: zip -r build.zip * && scp -i ~/.ssh/id_rsa build.zip $SRV_USER@$SRV_HOST:circle-ci-js-example
       - run:
           name: run
           command: ssh -i ~/.ssh/id_rsa $SRV_USER@$SRV_HOST:circle-ci-js-example && unzip build.zip -d build && cd build && npm start
