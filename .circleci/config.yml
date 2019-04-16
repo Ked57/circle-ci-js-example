@@ -71,7 +71,7 @@ jobs:
       - attach_workspace:
           at: ./
       - run:
-          name: zip workspace
+          name: send to server
           command: scp -r -p . $SRV_USER:$SRV_PASS@$SRV_HOST/:circle-ci-js-example
       - run:
           name: run
