@@ -50,6 +50,16 @@ jobs:
       - run:
           name: test
           command: npm run test
+  zip-to-artifactory:
+    docker:
+      - image: circleci/node:10
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ./
+      - run:
+          name: zip workspace
+          command: zip -r build.zip *
 
 workflows:
   version: 2
@@ -79,3 +89,9 @@ workflows:
           filters:
             tags:
               only: /.*/
+      - zip-to-artifactory:
+          requires:
+            - test
+          filters:
+            tags:
+              only: master
