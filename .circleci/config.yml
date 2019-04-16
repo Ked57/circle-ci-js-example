@@ -77,14 +77,11 @@ jobs:
           name: fix host authenticity for production server
           command: ssh-keyscan $SRV_HOST >> ~/.ssh/known_hosts
       - run:
-          name: debug
-          command: cat ~/.ssh/known_hosts
-      - run:
           name: send to server
-          command: scp build.zip $SRV_USER@$SRV_HOST:circle-ci-js-example
+          command: scp -i ~/.ssh/$SRV_HOST build.zip $SRV_USER@$SRV_HOST:circle-ci-js-example
       - run:
           name: run
-          command: ssh $SRV_USER@$SRV_HOST:circle-ci-js-example && unzip build.zip -d build && cd build && npm start
+          command: ssh -i ~/.ssh/$SRV_HOST $SRV_USER@$SRV_HOST:circle-ci-js-example && unzip build.zip -d build && cd build && npm start
 
 workflows:
   version: 2
