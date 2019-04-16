@@ -68,30 +68,30 @@ workflows:
     jobs:
       - install-dependencies:
           filters:
-            tags:
+            branches:
               only: /.*/
       - format-check:
           requires:
             - install-dependencies
           filters:
-            tags:
+            branches:
               only: /.*/
       - lint:
           requires:
             - install-dependencies
           filters:
-            tags:
+            branches:
               only: /.*/
       - test:
           requires:
             - format-check
             - lint
           filters:
-            tags:
+            branches:
               only: /.*/
       - zip-to-artifactory:
           requires:
             - test
           filters:
-            tags:
+            branches:
               only: master
