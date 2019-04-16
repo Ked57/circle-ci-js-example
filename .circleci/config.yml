@@ -73,13 +73,15 @@ jobs:
       - add_ssh_keys:
           fingerprints:
             - $SRV_FINGERPRINT
-      - run: echo 'THE FINGERPRINT' >> ~/.ssh/known_hosts
+      - run:
+          name: fix host authenticity for production server
+          command: ssh-keyscan $SRV_HOST >> ~/.ssh/known_hosts
       - run:
           name: send to server
-          command: scp -i ~/.ssh/server -o StrictHostKeyChecking=no build.zip $SRV_USER@$SRV_HOST:circle-ci-js-example
+          command: scp build.zip $SRV_USER@$SRV_HOST:circle-ci-js-example
       - run:
           name: run
-          command: ssh -i ~/.ssh/server -o StrictHostKeyChecking=no $SRV_USER@$SRV_HOST:circle-ci-js-example && unzip build.zip -d build && cd build && npm start
+          command: ssh $SRV_USER@$SRV_HOST:circle-ci-js-example && unzip build.zip -d build && cd build && npm start
 
 workflows:
   version: 2
