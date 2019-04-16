@@ -1,7 +1,6 @@
 version: 2 
 jobs: 
-  install-dependencies: 
-    working_directory: ~/circle-ci-js-example 
+  install-dependencies:  
     docker: 
       - image: circleci/node:10 
     steps:
@@ -21,8 +20,7 @@ jobs:
           root: ./
           paths:
             - node_modules
-  lint: 
-    working_directory: ~/circle-ci-js-example 
+  lint:  
     docker: 
       - image: circleci/node:10 
     steps:
@@ -31,8 +29,7 @@ jobs:
       - run:
           name: lint
           command: npm run lint
-  format-check: 
-    working_directory: ~/circle-ci-js-example 
+  format-check:  
     docker: 
       - image: circleci/node:10 
     steps:
@@ -41,8 +38,7 @@ jobs:
       - run:
           name: format:check
           command: npm run format:check
-  test: 
-    working_directory: ~/circle-ci-js-example 
+  test:  
     docker: 
       - image: circleci/node:10 
     steps:
