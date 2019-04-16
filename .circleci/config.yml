@@ -75,10 +75,10 @@ jobs:
             - $SRV_FINGERPRINT
       - run:
           name: send to server
-          command: scp -i ~/.ssh/id_rsa_$SRV_FINGERPRINT build.zip $SRV_USER@$SRV_HOST:circle-ci-js-example
+          command: yes | scp -i ~/.ssh/id_rsa_$SRV_FINGERPRINT build.zip $SRV_USER@$SRV_HOST:circle-ci-js-example
       - run:
           name: run
-          command: ssh -i ~/.ssh/id_rsa_$SRV_FINGERPRINT $SRV_USER@$SRV_HOST:circle-ci-js-example && unzip build.zip -d build && cd build && npm start
+          command: yes | ssh -i ~/.ssh/id_rsa_$SRV_FINGERPRINT $SRV_USER@$SRV_HOST:circle-ci-js-example && unzip build.zip -d build && cd build && npm start
 
 workflows:
   version: 2
