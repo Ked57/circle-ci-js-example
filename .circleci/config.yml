@@ -84,7 +84,7 @@ jobs:
           command: scp -v -i ~/.ssh/id_rsa build.tar $SRV_USER@$SRV_HOST:~
       - run:
           name: run
-          command: ssh -i ~/.ssh/id_rsa $SRV_USER@$SRV_HOST rm -rf Build && mkdir Build && tar -xvf build.tar -C ~/Build && cd build && npm start
+          command: ssh -i ~/.ssh/id_rsa $SRV_USER@$SRV_HOST "rm -rf Build && mkdir Build && tar -xvf build.tar -C ~/Build && cd build && npm start"
 workflows:
   version: 2
 
