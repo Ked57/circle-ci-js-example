@@ -84,7 +84,7 @@ jobs:
           command: scp -v -i ~/.ssh/id_rsa build.tar $SRV_USER@$SRV_HOST:~
       - run:
           name: run
-          command: ssh -i ~/.ssh/id_rsa $SRV_USER@$SRV_HOST "rm -rf build && mkdir build && tar -xvf build.tar -C ~/build && pwd && sh ~/build/screen.sh"
+          command: ssh -i ~/.ssh/id_rsa $SRV_USER@$SRV_HOST "rm -rf build && mkdir build && cd build && tar -xvf ../build.tar && pwd && sh ~/build/screen.sh"
 workflows:
   version: 2
 
