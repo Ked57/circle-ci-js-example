@@ -77,14 +77,14 @@ jobs:
           name: fix host authenticity for production server
           command: ssh-keyscan $SRV_HOST >> ~/.ssh/known_hosts
       - run:
-          name: zip
-          command: zip -r build.zip *
+          name: tar
+          command: tar -cvf build.tar *
       - run:
           name: send to server
-          command: scp -v -i ~/.ssh/id_rsa build.zip $SRV_USER@$SRV_HOST
+          command: scp -v -i ~/.ssh/id_rsa build.zip $SRV_USER@$SRV_HOST:~
       - run:
           name: run
-          command: ssh -i ~/.ssh/id_rsa $SRV_USER@$SRV_HOST unzip build.zip -d build && cd build && npm start
+          command: ssh -i ~/.ssh/id_rsa $SRV_USER@$SRV_HOST:~ tar -xvf build.tar -C build && cd build && npm start
 
 workflows:
   version: 2
