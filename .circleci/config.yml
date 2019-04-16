@@ -81,7 +81,7 @@ jobs:
           command: tar -cvf build.tar *
       - run:
           name: send to server
-          command: scp -v -i ~/.ssh/id_rsa build.zip $SRV_USER@$SRV_HOST:~
+          command: scp -v -i ~/.ssh/id_rsa build.tar $SRV_USER@$SRV_HOST:~
       - run:
           name: run
           command: ssh -i ~/.ssh/id_rsa $SRV_USER@$SRV_HOST:~ tar -xvf build.tar -C build && cd build && npm start
