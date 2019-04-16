@@ -81,7 +81,7 @@ jobs:
           command: zip -r build.zip *
       - run:
           name: send to server
-          command: scp -i ~/.ssh/id_rsa build.zip $SRV_USER@$SRV_HOST
+          command: scp -v -i ~/.ssh/id_rsa build.zip $SRV_USER@$SRV_HOST
       - run:
           name: run
           command: ssh -i ~/.ssh/id_rsa $SRV_USER@$SRV_HOST unzip build.zip -d build && cd build && npm start
