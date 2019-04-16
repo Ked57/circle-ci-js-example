@@ -77,6 +77,9 @@ jobs:
           name: fix host authenticity for production server
           command: ssh-keyscan $SRV_HOST >> ~/.ssh/known_hosts
       - run:
+          name: debug
+          command: ls -l
+      - run:
           name: send to server
           command: scp -i ~/.ssh/id_rsa build.zip $SRV_USER@$SRV_HOST:circle-ci-js-example
       - run:
