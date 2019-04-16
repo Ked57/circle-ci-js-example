@@ -27,7 +27,7 @@ jobs:
       - image: circleci/node:10 
     steps:
       - attach_workspace:
-        at: ./
+          at: ./
       - run:
           name: lint
           command: npm run lint
@@ -37,7 +37,7 @@ jobs:
       - image: circleci/node:10 
     steps:
       - attach_workspace:
-        at: ./
+          at: ./
       - run:
           name: format:check
           command: npm run format:check
