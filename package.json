@@ -4,8 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "test": "ava"
+    "start": "node ./src/index.js",
+    "test": "ava ./test",
+    "prettier": "prettier .circleci/config.yml  src/**.{js}",
+    "format:check": "npm run prettier --list-different",
+    "eslint": "eslint",
+    "lint": "npm run eslint src/**.js test/**.js"
   },
   "repository": {
     "type": "git",

@@ -1,21 +1,76 @@
-version: 2 # use CircleCI 2.0
-jobs: # a collection of steps
-  build: # runs not using Workflows must have a `build` job as entry point
-    working_directory: ~/circle-ci-js-example # directory where steps will run
-    docker: # run the steps with Docker
-      - image: circleci/node:10 # ...with this image as the primary container; this is where all `steps` will run
-    steps: # a collection of executable commands
-      - checkout # special step to check out source code to working directory
-      - restore_cache: # special step to restore the dependency cache
-          # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
+version: 2 
+jobs: 
+  install-dependencies: 
+    working_directory: ~/circle-ci-js-example 
+    docker: 
+      - image: circleci/node:10 
+    steps:
+      - checkout 
+      - restore_cache: 
           key: dependency-cache-{{ checksum "package.json" }}
       - run:
-          name: install-npm-wee
+          name: install-npm
           command: npm install
-      - save_cache: # special step to save the dependency cache
+      - save_cache: 
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
             - ./node_modules
-      - run: # run tests
+  lint: 
+    working_directory: ~/circle-ci-js-example 
+    docker: 
+      - image: circleci/node:10 
+    steps:
+      - restore_cache: 
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: lint
+          command: npm run lint
+  format-check: 
+    working_directory: ~/circle-ci-js-example 
+    docker: 
+      - image: circleci/node:10 
+    steps:
+      - restore_cache: 
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: format:check
+          command: npm run format:check
+  test: 
+    working_directory: ~/circle-ci-js-example 
+    docker: 
+      - image: circleci/node:10 
+    steps:
+      - restore_cache: 
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
           name: test
           command: npm run test
+
+workflows:
+  version: 2
+
+  js-example-workflow:
+    jobs:
+      - install-dependencies:
+          filters:
+            tags:
+              only: /.*/
+      - format-check:
+          requires:
+            - install-dependencies
+          filters:
+            tags:
+              only: /.*/
+      - lint:
+          requires:
+            - install-dependencies
+          filters:
+            tags:
+              only: /.*/
+      - test:
+          requires:
+            - format-check
+            - lint
+          filters:
+            tags:
+              only: /.*/

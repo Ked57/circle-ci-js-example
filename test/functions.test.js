@@ -1,5 +1,5 @@
 const test = require("ava");
-const { upperCase, addAHundred } = require("./../functions");
+const { upperCase, addAHundred } = require("../src/functions");
 
 test("Given a string, return the upper case version of it", t => {
   const string = "this is an example string";
@@ -9,5 +9,5 @@ test("Given a string, return the upper case version of it", t => {
 
 test("bar", async t => {
   const number = 123;
-  t.assert(addAHundred(123) === 223);
+  t.assert(addAHundred(number) === 223);
 });
