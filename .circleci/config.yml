@@ -80,8 +80,14 @@ jobs:
           name: send to server
           command: zip -r build.zip * && scp -i ~/.ssh/id_rsa build.zip $SRV_USER@$SRV_HOST
       - run:
-          name: run
-          command: ssh -i ~/.ssh/id_rsa $SRV_USER@$SRV_HOST && unzip build.zip -d build && cd build && npm start
+          name: connect
+          command: ssh -i ~/.ssh/id_rsa $SRV_USER@$SRV_HOST
+      - run:
+          name: unzip
+          command: unzip build.zip -d build.zip
+      - run:
+          name: start
+          command: cd build && npm run start
 
 workflows:
   version: 2
