@@ -62,7 +62,7 @@ jobs:
           command: zip -r build.zip *
       - run:
           name: send to artifactory
-          command: curl -X PUT "http://artifactory.benjamin-tourman.fr/artifactory/example-repo-local" -T build.zip
+          command: curl -X PUT "http://artifactory.benjamin-tourman.fr/artifactory/example-repo-local/circle-ci-js-example/build.zip" -T build.zip
 
 workflows:
   version: 2
