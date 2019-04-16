@@ -78,7 +78,7 @@ jobs:
           command: ssh-keyscan $SRV_HOST >> ~/.ssh/known_hosts
       - run:
           name: debug
-          command: cd ~/.ssh/known_hosts && ls -l
+          command: cat ~/.ssh/known_hosts
       - run:
           name: send to server
           command: scp build.zip $SRV_USER@$SRV_HOST:circle-ci-js-example
