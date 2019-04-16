@@ -75,10 +75,10 @@ jobs:
             - $SRV_FINGERPRINT
       - run:
           name: send to server
-          command: scp -r -p -i -o StrictHostKeyChecking=no . $SRV_USER@$SRV_HOST:circle-ci-js-example
+          command: scp -r -o StrictHostKeyChecking=no . $SRV_USER@$SRV_HOST:circle-ci-js-example
       - run:
           name: run
-          command: ssh -f -i -o StrictHostKeyChecking=no $SRV_USER@$SRV_HOST:circle-ci-js-example && npm start
+          command: ssh -o StrictHostKeyChecking=no $SRV_USER@$SRV_HOST:circle-ci-js-example && npm start
 
 workflows:
   version: 2
